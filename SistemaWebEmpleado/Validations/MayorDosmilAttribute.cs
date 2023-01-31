@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SistemaWebEmpleado.Validations
 {
@@ -10,7 +11,7 @@ namespace SistemaWebEmpleado.Validations
         }
         public override bool IsValid(object value)
         {
-            int year = (int)value;
+            int year = Convert.ToDateTime(value).Year;
             if (year < 2000)
             {
                 return false;

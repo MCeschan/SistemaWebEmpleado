@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SistemaWebEmpleado.Data;
 using SistemaWebEmpleado.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SistemaWebEmpleado.Controllers
@@ -42,17 +44,92 @@ namespace SistemaWebEmpleado.Controllers
             }
             return View(empleado);
         }
+       
         [HttpGet("titulo/{titulo}")]
-        public ActionResult<Empleado> GetTitulo(string titulo)
+        public ActionResult<IEnumerable<Empleado>> GetTitulo(string titulo)
         {
-
-            Empleado empleado = (from e in context.Empleados
-                                 where e.Titulo == titulo
-                                 select e).SingleOrDefault();
+            var empleado = (from a in context.Empleados
+                            where a.Titulo == titulo
+                            select a).ToList();
             return View("GetTitulo", empleado);
         }
+        
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            Empleado empleado = context.Empleados.Find(id);
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View("Delete", empleado);
+            }
+        }
 
-  
+        
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Empleado empleado = context.Empleados.Find(id);
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                context.Empleados.Remove(empleado);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var empleado = context.Empleados.Find(id);
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+
+                return View("Details", empleado);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var empleado = context.Empleados.Find(id);
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View("Edit", empleado);
+            }
+        }
+
+        [HttpPost]
+        [ActionName("Edit")]
+        public ActionResult EditConfirmed(Empleado empleado)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Entry(empleado).State = EntityState.Modified;
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else return View(empleado);
+        }
+
+
+
     }
 
 }

@@ -18,7 +18,7 @@ namespace SistemaWebEmpleado.Models
         public int DNI { get; set; }
 
         [Required(ErrorMessage = "Este es un campo obligatorio")]
-        [RegularExpression(@"^[A]{2}[1-9]{5}$", ErrorMessage = "Se aceptan 2 A al comienzo y cuatro números")]
+        [RegularExpression("^AA[0-9]{5}$", ErrorMessage = "Se aceptan 2 A al comienzo y cinco números")]
         public string Legajo { get; set; }
         [MayorDosmil]
         public DateTime FechaNacimiento { get; set; }

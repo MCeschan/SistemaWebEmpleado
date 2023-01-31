@@ -4,10 +4,39 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link href="~/css/main.css" rel="stylesheet" />
+
 </head>
 <body>
-    <div>
+    <header>
+        <h1>SISTEMA Empleado</h1>
+
+    </header>
+    <aside>
+        @if (IsSectionDefined("SideBar"))
+        {
+            @RenderSection("SideBar")
+        }
+        else
+        {
+
+                <h2>
+                    Bienvenido
+                    <img src="~/assets/smile.png" height="20px" width="20px"/>
+                </h2>
+        }
+    </aside>
+    <nav>
+       <ul>
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Empleado", "Index", "Empleado")</li>
+        </ul>
+    </nav>
+    <main>
         @RenderBody()
-    </div>
+    </main>
+    <footer>
+        <span>Info@Empleado.com</span>
+    </footer>
 </body>
 </html>
