@@ -42,20 +42,18 @@ namespace SistemaWebEmpleado.Controllers
             }
             return View(empleado);
         }
-        ////empleados por título
-        //[HttpGet]
-        //public ActionResult Titulo(string titulo)
-        //{
-        //    var titulo = context.Empleados.Find(titulo);
-        //    if (aula == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        return View("Details", aula);
-        //    }
-        //}
+        [HttpGet("titulo/{titulo}")]
+        public ActionResult<Empleado> GetTitulo(string titulo)
+        {
 
+            Empleado empleado = (from e in context.Empleados
+                                 where e.Titulo == titulo
+                                 select e).SingleOrDefault();
+            return View("GetTitulo", empleado);
+        }
+
+  
     }
+
 }
+
